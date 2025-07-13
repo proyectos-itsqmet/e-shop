@@ -1,14 +1,5 @@
 const cajaContenedor = document.getElementById("cajaContenedor");
 const marcaAgua = document.getElementById("marcaAgua");
-
-cajaContenedor.onmouseenter = () => {
-  marcaAgua.style.opacity = "1";
-};
-
-cajaContenedor.onmouseleave = () => {
-  marcaAgua.style.opacity = "0";
-};
-
 const imagen = cajaContenedor.querySelector("img");
 const srcOriginal = imagen.src;
 
