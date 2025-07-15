@@ -5,7 +5,7 @@ const srcOriginal = imagen.src;
 
 cajaContenedor.onmouseenter = () => {
   marcaAgua.style.opacity = "1";
-  imagen.src = "../../e-shop/images/banner/3.jpg";
+  imagen.src = "images/banner/3.jpg";
 };
 
 cajaContenedor.onmouseleave = () => {
