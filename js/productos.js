@@ -10,9 +10,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const divProductos = (producto) => {
+const divProductos = (producto, enCarrito = false) => {
   return `
-    <div class="col-span-1 w-full rounded-xl shadow-sm cursor-pointer">
+    <div class="col-span-1 w-full rounded-xl shadow-sm producto-item"
+         data-nombre="${producto.nombre}"
+         data-precio="${producto.precio}"
+         data-imagen="${producto.imagen}"
+         data-genero="${producto.genero}">
       <div class="relative bg-gray-100 rounded-t-xl overflow-hidden">
         <div class="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-bold text-3xl opacity-0 transition-opacity duration-300">
           eShop
@@ -34,26 +38,65 @@ const divProductos = (producto) => {
             <p class="text-md font-light pl-2">${producto.calificacion}</p>
           </div>
         </div>
-        <div class="font-bold text-xl">$${producto.precio}</div>
+        <div class="w-full flex justify-between">
+          <div class="font-bold text-xl">$${producto.precio}</div>
+          ${
+            enCarrito
+              ? `<svg class="w-6 h-6 text-cyan-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+                </svg>`
+              : `<button class="btn-agregar text-white bg-cyan-800 hover:bg-cyan-800 px-3 py-1 rounded-lg text-sm cursor-pointer" type="button">Agregar</button>`
+          }
+        </div>
       </div>
     </div>
   `;
 };
 
+const agregarProducto = async (nombre, precio, imagen, genero) => {
+  try {
+    await db.collection("carrito").add({ nombre, precio, imagen, genero });
+  } catch (error) {
+    console.log(`Error al agregar producto: ${error}`);
+  }
+};
+
 const cargarProductos = async () => {
   try {
-    const productos = await db.collection("productos").get();
+    const productosDB = await db.collection("productos").get();
+    const carritoDB = await db.collection("carrito").get();
 
-    const listaProductos = [];
+    const productos = [];
+    productosDB.forEach((doc) => {
+      productos.push(doc.data());
+    });
 
-    productos.forEach((producto) => {
-      listaProductos.push(producto.data());
+    const productosEnCarrito = new Set();
+    carritoDB.forEach((doc) => {
+      const data = doc.data();
+      productosEnCarrito.add(data.nombre);
     });
 
     const contenedorP = document.getElementById("productos");
+    contenedorP.innerHTML = "";
 
-    listaProductos.forEach((producto) => {
-      contenedorP.innerHTML += divProductos(producto);
+    productos.forEach((producto) => {
+      const enCarrito = productosEnCarrito.has(producto.nombre);
+      contenedorP.innerHTML += divProductos(producto, enCarrito);
+    });
+
+    document.querySelectorAll(".btn-agregar").forEach((btn) => {
+      btn.addEventListener("click", async (event) => {
+        event.stopPropagation(); // evitar burbuja
+        const item = btn.closest(".producto-item");
+        const nombre = item.getAttribute("data-nombre");
+        const precio = parseFloat(item.getAttribute("data-precio"));
+        const imagen = item.getAttribute("data-imagen");
+        const genero = item.getAttribute("data-genero");
+
+        await agregarProducto(nombre, precio, imagen, genero);
+        await cargarProductos();
+      });
     });
   } catch (error) {
     console.error("Error al cargar productos:", error);

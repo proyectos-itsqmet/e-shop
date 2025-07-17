@@ -26,7 +26,7 @@ const divProductos = (producto) => {
       <div class="w-full flex flex-col justify-between">
         <div class="flex flex-row justify-between">
           <span class="font-bold text-md">${producto.nombre}</span>
-          <button class="cursor-pointer">
+           <button class="eliminar cursor-pointer" data-nombre="${producto.nombre}">
             <svg
               class="w-6 h-6 text-red-500 dark:text-white"
               aria-hidden="true"
@@ -49,7 +49,7 @@ const divProductos = (producto) => {
         <div class="flex flex-row justify-between">
           <span class="font-bold text-xl">$${producto.precio}</span>
           <div class="flex flex-row gap-2 items-center bg-gray-200 p-2 rounded-full">
-            <button class="cursor-pointer">
+             <button class="eliminarProducto cursor-pointer" data-nombre="${producto.nombre}">
               <svg
                 class="w-5 h-5 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -69,7 +69,7 @@ const divProductos = (producto) => {
               </svg>
             </button>
             <span class="flex-1 text-center px-2 md:px-6">${producto.cantidad}</span>
-            <button class="cursor-pointer">
+            <button class="agregarProducto cursor-pointer" data-nombre="${producto.nombre}">
               <svg
                 class="w-5 h-5 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -100,9 +100,47 @@ const divProductos = (producto) => {
 const agregarProducto = async (nombre, precio, imagen, genero) => {
   try {
     await db.collection("carrito").add({ nombre, precio, imagen, genero });
-    await cargarCarrito();
+    await cargarProductos();
   } catch (error) {
-    console.log(`No se puede mostrar el producto, ${error}`);
+    console.log(`Error al agregar producto: ${error}`);
+  }
+};
+
+const eliminarProducto = async (nombre) => {
+  try {
+    const buscar = db.collection("carrito");
+
+    const productos = await buscar.where("nombre", "==", nombre).limit(1).get();
+
+    if (!productos.empty) {
+      const doc = productos.docs[0];
+      await buscar.doc(doc.id).delete();
+      await cargarProductos();
+    } else {
+      console.log("No se encontró un producto con ese nombre.");
+    }
+  } catch (error) {
+    console.error(`Error al eliminar el producto: ${error}`);
+  }
+};
+
+const eliminar = async (nombre) => {
+  try {
+    const productos = await db
+      .collection("carrito")
+      .where("nombre", "==", nombre)
+      .get();
+
+    const batch = db.batch();
+    productos.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    await batch.commit();
+    await cargarProductos();
+    console.log(`Se elimino el producto: ${nombre}`);
+  } catch (error) {
+    console.error(`Error al eliminar los productos: ${error}`);
   }
 };
 
@@ -113,18 +151,79 @@ const cargarProductos = async () => {
     const contenedorI = document.getElementById("iva");
     const contenedorT = document.getElementById("total");
 
+    contenedorP.innerHTML = "";
+
     let subtotal = 0;
     let iva = 0;
     let total = 0;
     const carrito = await db.collection("carrito").get();
 
+    const productosUnicos = [];
+    const unicos = new Set();
+
     carrito.forEach((p) => {
       const producto = p.data();
-      contenedorP.innerHTML += divProductos(producto);
       subtotal += producto.precio;
+
+      //! Verificar productos unicos
+      if (!unicos.has(producto.nombre)) {
+        unicos.add(producto.nombre);
+        productosUnicos.push({ cantidad: 1, ...producto });
+      } else {
+        const productoExistente = productosUnicos.find(
+          (p) => p.nombre === producto.nombre
+        );
+
+        productoExistente.cantidad += 1;
+        productoExistente.precio = producto.precio * productoExistente.cantidad;
+      }
     });
 
-    subtotal -= 10;
+    //! Ordenar productos
+    productosUnicos.sort((a, b) => {
+      if (a.nombre.toLowerCase() < b.nombre.toLowerCase()) return -1;
+      if (a.nombre.toLowerCase() > b.nombre.toLowerCase()) return 1;
+      return 0;
+    });
+
+    //! Agregar elementos al grid
+    productosUnicos.forEach((producto) => {
+      contenedorP.innerHTML += divProductos(producto);
+    });
+
+    //! Boton Eliminar
+    document.querySelectorAll(".eliminarProducto").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const nombre = btn.getAttribute("data-nombre");
+        eliminarProducto(nombre);
+      });
+    });
+
+    //! Boton Agregar
+    document.querySelectorAll(".agregarProducto").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const nombre = btn.getAttribute("data-nombre");
+        const prod = productosUnicos.find((p) => p.nombre === nombre);
+        if (prod) {
+          await agregarProducto(
+            prod.nombre,
+            prod.precio / prod.cantidad,
+            prod.imagen,
+            prod.genero
+          );
+        }
+      });
+    });
+
+    //! Boton eliminar
+    document.querySelectorAll(".eliminar").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const nombre = btn.getAttribute("data-nombre");
+        eliminar(nombre);
+      });
+    });
+
+    subtotal = productosUnicos.length <= 0 ? 0 : subtotal - 10;
     iva = subtotal * 0.15;
     total = subtotal + iva;
 
