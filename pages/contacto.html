@@ -200,170 +200,213 @@
 
     <!-- Main -->
 
-    <!-- Formulario -->
-    <div class="flex w-full justify-center">
-      <div class="w-[1280px] bg-white py-10 border-t-1 border-gray-100">
-        <p class="text-center pb-10 font-bold text-2xl">
-          FORMULARIO DE CONTACTO
-        </p>
-        <div class="bg-white">
-          <form action="#" id="formularioContacto">
-            <div
-              class="w-full md:max-w-[500px] flex flex-col items-center justify-center gap-4 mx-auto md:bg-gray-100 p-8 md:p-16 rounded-2xl"
-            >
-              <div class="w-full flex flex-col gap-1">
-                <label for="nombre" class="text-sm font-medium pl-1"
-                  >Nombre</label
-                >
-                <input
-                  type="text"
-                  name="nombre"
-                  placeholder="Nombres"
-                  class="border-gray-200 rounded-lg"
-                />
-              </div>
-              <div class="w-full flex flex-col gap-1">
-                <label for="nombre" class="text-sm font-medium pl-1"
-                  >Apellidos</label
-                >
-                <input
-                  type="text"
-                  name="apellido"
-                  placeholder="Apellidos"
-                  class="border-gray-200 rounded-lg"
-                />
-              </div>
-              <div class="w-full flex flex-col gap-1">
-                <label for="nombre" class="text-sm font-medium pl-1"
-                  >Celular</label
-                >
-                <input
-                  type="text"
-                  name="celular"
-                  placeholder="Celular"
-                  class="border-gray-200 rounded-lg"
-                />
-              </div>
-              <div class="w-full flex flex-col gap-1">
-                <label for="nombre" class="text-sm font-medium pl-1"
-                  >Correo</label
-                >
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Correo"
-                  class="border-gray-200 rounded-lg"
-                />
-              </div>
-              <div class="w-full flex flex-col gap-1">
-                <label for="nombre" class="text-sm font-medium pl-1"
-                  >Dejanos un mensaje</label
-                >
-
-                <textarea
-                  name="mensaje"
-                  id="mensaje"
-                  placeholder="Mensaje"
-                  class="border-gray-200 rounded-lg"
-                ></textarea>
-              </div>
-              <button
-                id="enviar"
-                class="w-full mt-10 bg-cyan-800 hover:bg-cyan-900 text-white py-2 rounded-lg cursor-pointer"
-              >
-                Enviar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Formulario -->
-
-    <!-- Tabla registro contactos -->
-
-    <div class="flex w-full justify-center">
-      <div class="w-[1280px] bg-white pb-10 px-6">
-        <p class="text-center pb-10 font-bold text-2xl">
-          REGISTRO DE CONTACTOS
-        </p>
-        <!-- Mobile -->
-        <div
-          id="registrosContactosLista"
-          class="gap-2 flex flex-col sm:hidden"
-        ></div>
-        <!-- Mobile -->
-
-        <!-- Desktop -->
-        <div class="hidden sm:flex">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Nombres
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Apellidos
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Celular
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Correo
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Mensaje
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              id="registrosContactos"
-              class="bg-white divide-y divide-gray-200"
-            ></tbody>
-          </table>
-        </div>
-        <!-- Desktop -->
-      </div>
-    </div>
-
-    <!-- Tabla registro contactos -->
-
-    <!-- Imagen con evento -->
-    <div class="flex w-full justify-center">
-      <div class="w-[1280px] bg-white pb-10 px-6">
-        <div class="w-full flex justify-center">
+    <main>
+      <!-- DIVISOR -->
+      <div class="hidden md:block">
+        <div class="flex flex-col w-full justify-center items-center">
           <div
-            id="cajaContenedor"
-            class="relative w-full rounded-2xl overflow-hidden cursor-pointer max-w-[600px]"
+            class="w-full max-w-[1280px] pb-5 flex flex-col items-center justify-center bg-white gap-6"
           >
-            <div
-              id="marcaAgua"
-              class="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-bold text-3xl opacity-0 transition-opacity duration-300"
-            >
-              eShop
-            </div>
-            <img src="../images/banner/1.jpg" alt="" class="w-full h-auto" />
+            <div class="w-full h-px bg-gray-100"></div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Imagen con evento -->
+      <!--  -->
+      <div class="w-full">
+        <div
+          class="w-full max-w-[1280px] mx-auto flex items-center gap-2 p-4 md:py-2 px-10 bg-white"
+        >
+          <a
+            href="../index.html"
+            class="font-light text-gray-400 hover:text-gray-500 hover:underline"
+            >Home</a
+          ><svg
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m10 16 4-4-4-4"
+            />
+          </svg>
+          <span>Contacto</span>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="flex w-full justify-center">
+        <div class="w-[1280px] bg-white py-10 border-t-1 border-gray-100">
+          <p class="text-center pb-10 font-bold text-2xl">
+            FORMULARIO DE CONTACTO
+          </p>
+          <div class="bg-white">
+            <form action="#" id="formularioContacto">
+              <div
+                class="w-full md:max-w-[500px] flex flex-col items-center justify-center gap-4 mx-auto md:bg-gray-100 p-8 md:p-16 rounded-2xl"
+              >
+                <div class="w-full flex flex-col gap-1">
+                  <label for="nombre" class="text-sm font-medium pl-1"
+                    >Nombre</label
+                  >
+                  <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Nombres"
+                    class="border-gray-200 rounded-lg"
+                  />
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                  <label for="nombre" class="text-sm font-medium pl-1"
+                    >Apellidos</label
+                  >
+                  <input
+                    type="text"
+                    name="apellido"
+                    placeholder="Apellidos"
+                    class="border-gray-200 rounded-lg"
+                  />
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                  <label for="nombre" class="text-sm font-medium pl-1"
+                    >Celular</label
+                  >
+                  <input
+                    type="text"
+                    name="celular"
+                    placeholder="Celular"
+                    class="border-gray-200 rounded-lg"
+                  />
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                  <label for="nombre" class="text-sm font-medium pl-1"
+                    >Correo</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Correo"
+                    class="border-gray-200 rounded-lg"
+                  />
+                </div>
+                <div class="w-full flex flex-col gap-1">
+                  <label for="nombre" class="text-sm font-medium pl-1"
+                    >Dejanos un mensaje</label
+                  >
+
+                  <textarea
+                    name="mensaje"
+                    id="mensaje"
+                    placeholder="Mensaje"
+                    class="border-gray-200 rounded-lg"
+                  ></textarea>
+                </div>
+                <button
+                  id="enviar"
+                  class="w-full mt-10 bg-cyan-800 hover:bg-cyan-900 text-white py-2 rounded-lg cursor-pointer"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Formulario -->
+
+      <!-- Tabla registro contactos -->
+
+      <div class="flex w-full justify-center">
+        <div class="w-[1280px] bg-white pb-10 px-6">
+          <p class="text-center pb-10 font-bold text-2xl">
+            REGISTRO DE CONTACTOS
+          </p>
+          <!-- Mobile -->
+          <div
+            id="registrosContactosLista"
+            class="gap-2 flex flex-col sm:hidden"
+          ></div>
+          <!-- Mobile -->
+
+          <!-- Desktop -->
+          <div class="hidden sm:flex">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Nombres
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Apellidos
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Celular
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Correo
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Mensaje
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="registrosContactos"
+                class="bg-white divide-y divide-gray-200"
+              ></tbody>
+            </table>
+          </div>
+          <!-- Desktop -->
+        </div>
+      </div>
+
+      <!-- Tabla registro contactos -->
+
+      <!-- Imagen con evento -->
+      <div class="flex w-full justify-center">
+        <div class="w-[1280px] bg-white pb-10 px-6">
+          <div class="w-full flex justify-center">
+            <div
+              id="cajaContenedor"
+              class="relative w-full rounded-2xl overflow-hidden cursor-pointer max-w-[600px]"
+            >
+              <div
+                id="marcaAgua"
+                class="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-bold text-3xl opacity-0 transition-opacity duration-300"
+              >
+                eShop
+              </div>
+              <img src="../images/banner/1.jpg" alt="" class="w-full h-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen con evento -->
+    </main>
 
     <!-- Main -->
 
