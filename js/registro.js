@@ -36,26 +36,34 @@ const formulario = document.getElementById("formularioRegistro");
 
 //! Validar Nombres
 const validarNombres = () => {
-  if (inputNombres.value.trim() === "") {
-    errorNombres.textContent = "El nombre es obligatorio";
+  const nombre = inputNombres.value.trim();
+  const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 
+  if (nombre === "") {
+    errorNombres.textContent = "El nombre es obligatorio";
+    return false;
+  } else if (!regexNombre.test(nombre)) {
+    errorNombres.textContent = "Solo se permiten letras y espacios";
     return false;
   } else {
     errorNombres.textContent = "";
-
     return true;
   }
 };
 
 //! Validar Apellidos
 const validarApellidos = () => {
-  if (inputApellidos.value.trim() === "") {
-    errorApellidos.textContent = "El nombre es obligatorio";
+  const apellido = inputApellidos.value.trim();
+  const regexApellido = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 
+  if (apellido === "") {
+    errorApellidos.textContent = "El apellido es obligatorio";
+    return false;
+  } else if (!regexApellido.test(apellido)) {
+    errorApellidos.textContent = "Solo se permiten letras y espacios";
     return false;
   } else {
     errorApellidos.textContent = "";
-
     return true;
   }
 };
